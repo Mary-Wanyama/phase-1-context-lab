@@ -1,19 +1,19 @@
 /* Your Code Here */
 
-let createEmployeedord = function(arr){
+let createEmployeeRecord = function(row){
     return {
-        firstName: arr[0],
-        familyName: arr[1],
-        title: arr[2],
-        payPerHour: arr[3],
+        firstName: row[0],
+        familyName: row[1],
+        title: row[2],
+        payPerHour: row[3],
         timeInEvents: [],
         timeOutEvents: []
     }
 }
 
-let createEmployeedords = function(employeeData) {
-    return employeeData.map(function(arr){
-        return createEmployeedord(arr)
+let createEmployeeRecords = function(employeeRowData) {
+    return employeeRowData.map(function(row){
+        return createEmployeeRecord(row)
     })
 }
 
@@ -54,9 +54,9 @@ let hoursWorkedOnDate = function(soughtDate){
 }
 
 let wagesEarnedOnDate = function(dateSought){
-    let wage = hoursWorkedOnDate.call(this, dateSought)
+    let rawWage = hoursWorkedOnDate.call(this, dateSought)
         * this.payPerHour
-    return parseFloat(wage.toString())
+    return parseFloat(rawWage.toString())
 }
 
 let allWages = function(){
@@ -64,22 +64,22 @@ let allWages = function(){
         return e.date
     })
 
-    let payable = eligibleDates.reduce(function(dat, d){
-        return dat + wagesEarnedOnDate.call(this, d)
+    let payable = eligibleDates.reduce(function(memo, d){
+        return memo + wagesEarnedOnDate.call(this, d)
     }.bind(this), 0)
 
     return payable
 }
 
-let findEmployeeByFirstName = function(sourceArr, firstName) {
-  return sourceArr.find(function(d){
-    return d.firstName === firstName
+let findEmployeeByFirstName = function(srcArray, firstName) {
+  return srcArray.find(function(rec){
+    return rec.firstName === firstName
   })
 }
 
-let calculatePayroll = function(arrayOfEmployeedords){
-    return arrayOfEmployeedords.reduce(function(dat, d){
-        return dat + allWagesFor.call(d)
+let calculatePayroll = function(arrayOfEmployeeRecords){
+    return arrayOfEmployeeRecords.reduce(function(memo, rec){
+        return memo + allWagesFor.call(rec)
     }, 0)
 }
 
@@ -96,8 +96,8 @@ const allWagesFor = function () {
         return e.date
     })
 
-    const payable = eligibleDates.reduce(function (dat, d) {
-        return dat + wagesEarnedOnDate.call(this, d)
+    const payable = eligibleDates.reduce(function (memo, d) {
+        return memo + wagesEarnedOnDate.call(this, d)
     }.bind(this), 0) // <== Hm, why did we need to add bind() there? We'll discuss soon!
 
     return payable
